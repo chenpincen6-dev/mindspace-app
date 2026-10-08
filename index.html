@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindSpace - 極簡專注與習慣追蹤器</title>
+    <style>
+        :root {
+            --bg-color: #f4f5f7;
+            --card-bg: #ffffff;
+            --text-main: #333d47;
+            --text-sub: #7a8b99;
+            --accent-color: #6c889b;
+            --accent-hover: #566f81;
+            --border-color: #e2e8f0;
+            --success-color: #8da399;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1e24;
+            --card-bg: #242931;
+            --text-main: #e2e8f0;
+            --text-sub: #94a3b8;
+            --accent-color: #89a7b9;
+            --accent-hover: #a3becc;
+            --border-color: #334155;
+            --success-color: #a3becc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-sub);
+        }
+
+        .timer-card {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 12px 0;
+            color: var(--accent-color);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        button.action-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        button.action-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.secondary-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-sub);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .stats-bar {
+            margin-bottom: 20px;
+        }
+
+        .stats-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
+
+        .progress-bg {
+            height: 6px;
+            background-color: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--success-color);
+            transition: width 0.3s ease;
+        }
+
+        .habit-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .habit-list {
+            list-style: none;
+        }
+
+        .habit-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            background-color: var(--bg-color);
+        }
+
+        .habit-item.completed span {
+            text-decoration: line-through;
+            color: var(--text-sub);
+            opacity: 0.7;
+        }
+
+        .habit-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>MINDSPACE</h1>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </header>
+
+    <!-- 專注計時器區域 -->
+    <div class="timer-card">
+        <div style="font-size: 0.85rem; color: var(--text-sub);" id="timerModeText">專注時間 (25分鐘)</div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="btn-group">
+            <button class="action-btn" id="startBtn">開始專注</button>
+            <button class="secondary-btn" id="resetBtn">重置</button>
+        </div>
+    </div>
+
+    <!-- 進度與統計 -->
+    <div class="stats-bar">
+        <div class="stats-text">
+            <span>今日習慣完成率</span>
+            <span id="statsPercent">0%</span>
+        </div>
+        <div class="progress-bg">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- 習慣追蹤清單 -->
+    <div class="habit-input-group">
+        <input type="text" id="habitInput" placeholder="新增今日目標習慣..." maxlength="20">
+        <button class="action-btn" id="addHabitBtn">新增</button>
+    </div>
+
+    <ul class="habit-list" id="habitList"></ul>
+</div>
+
+<script>
+    // 1. 主題切換邏輯
+    const themeToggle = document.getElementById('themeToggle');
+    let isDark = false;
+    themeToggle.addEventListener('click', () => {
+        isDark = !isDark;
+        document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+    });
+
+    // 2. 番茄鐘邏輯
+    let timeLeft = 25 * 60;
+    let timerId = null;
+    let isRunning = false;
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    startBtn.addEventListener('click', () => {
+        if (isRunning) {
+            clearInterval(timerId);
+            startBtn.textContent = '繼續';
+            isRunning = false;
+        } else {
+            isRunning = true;
+            startBtn.textContent = '暫停';
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerId);
+                    alert('專注時間結束！休息一下吧！');
+                    timeLeft = 25 * 60;
+                    updateTimerDisplay();
+                    startBtn.textContent = '開始專注';
+                    isRunning = false;
+                }
+            }, 1000);
+        }
+    });
+
+    resetBtn.addEventListener('click', () => {
+        clearInterval(timerId);
+        isRunning = false;
+        timeLeft = 25 * 60;
+        updateTimerDisplay();
+        startBtn.textContent = '開始專注';
+    });
+
+    // 3. 習慣清單與 LocalStorage 邏輯
+    const habitInput = document.getElementById('habitInput');
+    const addHabitBtn = document.getElementById('addHabitBtn');
+    const habitList = document.getElementById('habitList');
+    const statsPercent = document.getElementById('statsPercent');
+    const progressFill = document.getElementById('progressFill');
+
+    let habits = JSON.parse(localStorage.getItem('habits')) || [
+        { text: '讀書/寫程式 45 分鐘', completed: false },
+        { text: '健身 / 運動', completed: false }
+    ];
+
+    function saveAndRender() {
+        localStorage.setItem('habits', JSON.stringify(habits));
+        renderHabits();
+    }
+
+    function renderHabits() {
+        habitList.innerHTML = '';
+        let completedCount = 0;
+
+        habits.forEach((habit, index) => {
+            if (habit.completed) completedCount++;
+
+            const li = document.createElement('li');
+            li.className = `habit-item ${habit.completed ? 'completed' : ''}`;
+            li.innerHTML = `
+                <div class="habit-left">
+                    <input type="checkbox" ${habit.completed ? 'checked' : ''} data-index="${index}">
+                    <span>${habit.text}</span>
+                </div>
+                <button class="delete-btn" data-delete="${index}">刪除</button>
+            `;
+            habitList.appendChild(li);
+        });
+
+        // 更新進度條
+        const total = habits.length;
+        const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+        statsPercent.textContent = `${percent}%`;
+        progressFill.style.width = `${percent}%`;
+    }
+
+    addHabitBtn.addEventListener('click', () => {
+        const text = habitInput.value.trim();
+        if (text) {
+            habits.push({ text, completed: false });
+            habitInput.value = '';
+            saveAndRender();
+        }
+    });
+
+    habitList.addEventListener('click', (e) => {
+        if (e.target.type === 'checkbox') {
+            const index = e.target.dataset.index;
+            habits[index].completed = e.target.checked;
+            saveAndRender();
+        } else if (e.target.dataset.delete !== undefined) {
+            const index = e.target.dataset.delete;
+            habits.splice(index, 1);
+            saveAndRender();
+        }
+    });
+
+    renderHabits();
+</script>
+</body>
+</html>

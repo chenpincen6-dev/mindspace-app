@@ -4,226 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>月底救星：窮鬼美食與預算算盤 BrokeGourmet</title>
-    <!-- Google Fonts & FontAwesome Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.85);
-            --card-border: rgba(255, 255, 255, 0.12);
+            --card-bg: #1e293b;
+            --card-border: rgba(255, 255, 255, 0.15);
             --primary: #f59e0b;
-            --primary-hover: #d97706;
             --accent: #10b981;
             --danger: #ef4444;
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body {
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            background: #0f172a;
             color: var(--text-main);
             min-height: 100vh;
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
         }
 
         .app-container {
             width: 100%;
-            max-width: 850px;
+            max-width: 800px;
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
             border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 28px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--card-border);
-            padding-bottom: 16px;
+            padding-bottom: 12px;
         }
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
 
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
             margin-bottom: 24px;
         }
 
         .stat-card {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.7);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 14px;
             text-align: center;
         }
 
-        .stat-card h3 {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-bottom: 8px;
-        }
+        .stat-card h3 { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 6px; }
+        .stat-card .amount { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
 
-        .stat-card .amount {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .input-inline {
+        .input-box {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 8px;
             align-items: center;
         }
 
-        input[type="number"], input[type="text"] {
+        input {
             width: 100%;
-            padding: 10px 14px;
-            border-radius: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
             border: 1px solid var(--card-border);
-            background: rgba(15, 23, 42, 0.5);
+            background: #0f172a;
             color: white;
             outline: none;
         }
 
         .btn {
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 8px 16px;
+            border-radius: 8px;
             border: none;
             background: var(--primary);
             color: #0f172a;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
             white-space: nowrap;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .food-section {
-            margin-top: 28px;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .food-section { margin-top: 24px; }
+        .section-title { font-size: 1rem; font-weight: 600; margin-bottom: 12px; color: var(--primary); }
 
         .food-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
         }
 
         .food-card {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
         }
 
-        .food-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-
-        .food-title {
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .food-price {
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .food-desc {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-bottom: 12px;
-        }
-
-        .tag-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-sub);
-        }
-
-        .badge.protein {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-        }
+        .food-title { font-weight: 700; display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .food-price { color: var(--accent); }
+        .food-desc { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 8px; }
 
         .log-section {
-            margin-top: 32px;
-            background: rgba(15, 23, 42, 0.4);
-            border-radius: 16px;
-            padding: 20px;
+            margin-top: 24px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 16px;
             border: 1px solid var(--card-border);
         }
 
         .log-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid var(--card-border);
-        }
-
-        .log-item:last-child {
-            border-bottom: none;
-        }
-
-        @media (max-width: 600px) {
-            .app-container { padding: 18px; }
-            .dashboard { grid-template-columns: 1fr; }
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -232,49 +142,43 @@
 <div class="app-container">
     <header>
         <div class="logo"><i class="fa-solid fa-utensils"></i> BrokeGourmet 月底救星</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub);">窮鬼美食與預算算盤</div>
+        <div style="font-size: 0.8rem; color: var(--text-sub);">預算與美食計算器</div>
     </header>
 
     <div class="dashboard">
         <div class="stat-card">
-            <h3>距離發薪/發生活費</h3>
-            <div class="input-inline">
-                <input type="number" id="daysLeft" value="7" min="1" oninput="calculateBudget()">
-                <span style="color: var(--text-sub);">天</span>
+            <h3>距離發薪/生活費 (天)</h3>
+            <div class="input-box">
+                <input type="number" id="daysLeft" value="7" min="1" oninput="calc()">
             </div>
         </div>
         <div class="stat-card">
-            <h3>目前剩餘總預算 (NT$)</h3>
-            <div class="input-inline">
-                <input type="number" id="totalMoney" value="1200" step="50" oninput="calculateBudget()">
+            <h3>剩餘總預算 (NT$)</h3>
+            <div class="input-box">
+                <input type="number" id="totalMoney" value="1400" step="50" oninput="calc()">
             </div>
         </div>
         <div class="stat-card" style="border-color: var(--primary);">
-            <h3>今日單餐可用預算</h3>
-            <div class="amount" id="perMealBudget">NT$ 57</div>
-            <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px;" id="dailyBudgetHint">每日總預算約 NT$ 171 (以一天 3 餐計)</div>
+            <h3>單餐可用預算</h3>
+            <div class="amount" id="perMealBudget">NT$ 66</div>
         </div>
     </div>
 
     <div class="food-section">
-        <div class="section-title">
-            <i class="fa-solid fa-burger" style="color: var(--primary);"></i>
-            根據你的目前單餐預算推薦美食組合
-        </div>
-
+        <div class="section-title"><i class="fa-solid fa-burger"></i> 推薦省錢美食組合</div>
         <div class="food-grid" id="foodGrid"></div>
     </div>
 
     <div class="log-section">
-        <div class="section-title" style="justify-content: space-between;">
-            <span><i class="fa-solid fa-receipt" style="color: var(--accent);"></i> 今日已花費記帳</span>
-            <span style="font-size: 0.9rem; color: var(--primary);" id="todayTotalCost">今日已花: NT$ 0</span>
+        <div class="section-title" style="display:flex; justify-content:space-between;">
+            <span><i class="fa-solid fa-receipt"></i> 今日飲食記帳</span>
+            <span id="todayTotal" style="color:var(--accent);">已花費: NT$ 0</span>
         </div>
 
-        <div class="input-inline" style="margin-bottom: 16px;">
-            <input type="text" id="customFoodName" placeholder="餐點名稱 (如: 雞肉飯 + 蛋)">
-            <input type="number" id="customFoodPrice" placeholder="金額" style="width: 120px;">
-            <button class="btn" onclick="addCustomLog()"><i class="fa-solid fa-plus"></i> 記一筆</button>
+        <div class="input-box" style="margin-bottom: 12px;">
+            <input type="text" id="foodName" placeholder="餐點名稱">
+            <input type="number" id="foodPrice" placeholder="金額" style="width:100px;">
+            <button class="btn" onclick="addLog()">記一筆</button>
         </div>
 
         <div id="logList"></div>
@@ -282,37 +186,69 @@
 </div>
 
 <script>
-    const foodDatabase = [
-        { name: "全家友善時光 7 折飯糰/便當", price: 45, protein: "12g~20g", desc: "晚上 5 點後窮鬼神器，品質好又高 CP 值" },
-        { name: "營多印尼炒麵 + 煎蛋", price: 25, protein: "8g", desc: "極致省錢選擇，加顆蛋補充基礎蛋白質" },
-        { name: "無糖豆漿 + 7-11 溏心蛋", price: 42, protein: "20g", desc: "高蛋白低預算首選，健身控必備超商組合" },
-        { name: "全聯吐司 + 鮪魚罐頭 (平分2餐)", price: 50, protein: "18g", desc: "買一罐鮪魚配半包吐司，飽足感拉滿" },
-        { name: "學校食堂自助菜飯便當", price: 65, protein: "15g", desc: "多夾青菜與豆腐，白飯加滿最劃算" },
-        { name: "超商雞胸肉 + 小地瓜", price: 85, protein: "24g", desc: "乾淨飲食且高飽足感，適合預算稍微充足時" },
-        { name: "連鎖台式乾麵 + 貢丸湯", price: 75, protein: "12g", desc: "傳統小吃店熱騰騰好選擇" },
-        { name: "自選雙主菜豪華便當", price: 110, protein: "35g", desc: "今天發薪或預算充足，好好犒賞自己！" }
+    const db = [
+        { name: "全家友善時光 7折便當", price: 45, desc: "晚上5點後窮鬼神器" },
+        { name: "營多印尼炒麵 + 煎蛋", price: 25, desc: "極致省錢加蛋補蛋白質" },
+        { name: "無糖豆漿 + 7-11 溏心蛋", price: 42, desc: "超商高蛋白省錢組合" },
+        { name: "全聯吐司 + 鮪魚罐頭", price: 50, desc: "平分兩餐吃飽飽" },
+        { name: "學校食堂自助餐", price: 65, desc: "多夾豆腐與青菜" },
+        { name: "超商雞胸肉 + 小地瓜", price: 85, desc: "預算充裕時健康吃" }
     ];
 
-    let todayLogs = JSON.parse(localStorage.getItem('bg_today_logs')) || [];
+    let logs = [];
 
-    function calculateBudget() {
-        const days = Math.max(1, parseInt(document.getElementById('daysLeft').value) || 1);
-        const money = Math.max(0, parseInt(document.getElementById('totalMoney').value) || 0);
+    function calc() {
+        const d = Math.max(1, parseInt(document.getElementById('daysLeft').value) || 1);
+        const m = Math.max(0, parseInt(document.getElementById('totalMoney').value) || 0);
+        const perMeal = Math.floor((m / d) / 3);
         
-        const dailyBudget = Math.floor(money / days);
-        const perMeal = Math.floor(dailyBudget / 3);
-
         document.getElementById('perMealBudget').innerText = `NT$ ${perMeal}`;
-        document.getElementById('dailyBudgetHint').innerText = `每日總預算約 NT$ ${dailyBudget} (一天以 3 餐計)`;
 
-        renderFoodRecommendations(perMeal);
-    }
-
-    function renderFoodRecommendations(perMealBudget) {
         const grid = document.getElementById('foodGrid');
         grid.innerHTML = '';
+        
+        db.filter(x => x.price <= perMeal + 20).forEach(item => {
+            grid.innerHTML += `
+                <div class="food-card">
+                    <div>
+                        <div class="food-title"><span>${item.name}</span><span class="food-price">NT$ ${item.price}</span></div>
+                        <div class="food-desc">${item.desc}</div>
+                    </div>
+                    <button class="btn" style="font-size:0.75rem; padding:4px 8px;" onclick="quickAdd('${item.name}', ${item.price})">+ 吃這個</button>
+                </div>
+            `;
+        });
+    }
 
-        const filtered = foodDatabase.filter(item => item.price <= perMealBudget + 25);
+    function renderLogs() {
+        const list = document.getElementById('logList');
+        let sum = 0;
+        list.innerHTML = '';
+        logs.forEach((item, i) => {
+            sum += item.price;
+            list.innerHTML += `<div class="log-item"><span>${item.name}</span><span style="color:var(--primary)">NT$ ${item.price}</span></div>`;
+        });
+        document.getElementById('todayTotal').innerText = `已花費: NT$ ${sum}`;
+    }
 
-        if (filtered.length === 0) {
-            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--
+    function quickAdd(name, price) {
+        logs.push({ name, price });
+        renderLogs();
+    }
+
+    function addLog() {
+        const n = document.getElementById('foodName').value.trim();
+        const p = parseInt(document.getElementById('foodPrice').value);
+        if (n && !isNaN(p)) {
+            logs.push({ name: n, price: p });
+            document.getElementById('foodName').value = '';
+            document.getElementById('foodPrice').value = '';
+            renderLogs();
+        }
+    }
+
+    // 啟動計算
+    calc();
+</script>
+</body>
+</html>

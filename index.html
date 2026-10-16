@@ -3,40 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>月底救星：窮鬼美食與預算算盤 BrokeGourmet Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>月底救星：窮鬼美食與預算算盤 BrokeGourmet Maps</title>
     <style>
         :root {
             --bg: #0f172a;
             --card-bg: #1e293b;
-            --card-border: rgba(255, 255, 255, 0.12);
+            --border: #334155;
             --primary: #f59e0b;
             --accent: #10b981;
+            --blue: #38bdf8;
             --danger: #ef4444;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
+            --text: #f8fafc;
+            --sub: #94a3b8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
 
         body {
-            background: radial-gradient(circle at top, #1e293b, #0f172a);
-            color: var(--text-main);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             padding: 20px;
             display: flex;
             justify-content: center;
         }
 
-        .app-container {
+        .container {
             width: 100%;
             max-width: 850px;
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         header {
@@ -44,76 +43,96 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--border);
             padding-bottom: 12px;
         }
 
-        .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--primary); }
 
-        /* 預算面板 */
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
-        .stat-card {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 16px;
+        .card {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
             text-align: center;
         }
 
-        .stat-card h3 { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 8px; }
-        .stat-card .amount { font-size: 2rem; font-weight: 700; color: var(--primary); }
+        .card h3 { font-size: 0.85rem; color: var(--sub); margin-bottom: 6px; }
+        .amount { font-size: 1.8rem; font-weight: bold; color: var(--primary); }
 
-        .input-box { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+        .input-row { display: flex; gap: 8px; margin-top: 6px; align-items: center; }
 
-        input, select {
+        input {
             width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid var(--card-border);
-            background: #0f172a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #1e293b;
             color: white;
             outline: none;
         }
 
         .btn {
-            padding: 10px 16px;
-            border-radius: 10px;
+            padding: 8px 14px;
+            border-radius: 8px;
             border: none;
             background: var(--primary);
             color: #0f172a;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
             white-space: nowrap;
-            transition: 0.2s;
         }
 
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn:hover { opacity: 0.9; }
+
+        /* 地點與地圖搜尋設定區 */
+        .location-bar {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--blue);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .location-bar span { color: var(--blue); font-weight: bold; font-size: 0.9rem; }
 
         /* 進度條 */
-        .progress-bar-bg {
-            height: 10px;
+        .progress-box {
             background: #0f172a;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 12px;
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
-        .progress-bar-fill {
+        .progress-bar {
+            height: 8px;
+            background: #1e293b;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
             height: 100%;
             width: 0%;
             background: var(--accent);
-            transition: width 0.3s, background-color 0.3s;
+            transition: width 0.3s;
         }
 
-        /* 篩選與隨機抽籤 */
-        .filter-bar {
+        /* 標籤按鈕 */
+        .filter-row {
             display: flex;
             gap: 8px;
             margin-bottom: 16px;
@@ -123,22 +142,18 @@
         }
 
         .tag-btn {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--card-border);
-            color: var(--text-sub);
-            padding: 6px 14px;
-            border-radius: 20px;
+            background: #0f172a;
+            border: 1px solid var(--border);
+            color: var(--sub);
+            padding: 6px 12px;
+            border-radius: 16px;
             cursor: pointer;
             font-size: 0.85rem;
         }
 
-        .tag-btn.active {
-            background: var(--primary);
-            color: #0f172a;
-            font-weight: 700;
-        }
+        .tag-btn.active { background: var(--primary); color: #0f172a; font-weight: bold; }
 
-        /* 美食卡片網格 */
+        /* 菜單網格 */
         .food-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -146,107 +161,124 @@
         }
 
         .food-card {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 14px;
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
         }
 
-        .food-card:hover { transform: translateY(-3px); border-color: var(--primary); }
-        .food-title { font-weight: 700; display: flex; justify-content: space-between; margin-bottom: 6px; }
-        .food-price { color: var(--accent); font-weight: 700; }
-        .food-desc { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 10px; }
-        .badge { font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; background: rgba(16,185,129,0.15); color: #34d399; }
+        .food-title { font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .food-price { color: var(--accent); }
+        .food-desc { font-size: 0.8rem; color: var(--sub); margin-bottom: 10px; }
 
-        /* 記帳紀錄 */
-        .log-section {
-            margin-top: 28px;
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 14px;
-            padding: 18px;
-            border: 1px solid var(--card-border);
+        .btn-group { display: flex; gap: 6px; }
+
+        .btn-map {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--blue);
+            border: 1px solid var(--blue);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-map:hover { background: var(--blue); color: #0f172a; }
+
+        .log-box {
+            margin-top: 24px;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
         }
 
         .log-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--border);
             font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="container">
     <header>
-        <div class="logo"><i class="fa-solid fa-utensils"></i> BrokeGourmet 月底救星 Pro</div>
-        <div style="font-size: 0.8rem; color: var(--text-sub);">窮鬼美食與動態預算算盤</div>
+        <div class="logo">🍱 BrokeGourmet 月底救星 + 地圖導航</div>
+        <div style="font-size: 0.8rem; color: var(--sub);">窮鬼預算算盤</div>
     </header>
 
     <!-- 1. 預算算盤 -->
     <div class="dashboard">
-        <div class="stat-card">
-            <h3>距離發薪/生活費</h3>
-            <div class="input-box">
+        <div class="card">
+            <h3>距離發薪/生活費 (天)</h3>
+            <div class="input-row">
                 <input type="number" id="daysLeft" value="7" min="1" oninput="calc()">
-                <span style="color: var(--text-sub);">天</span>
             </div>
         </div>
-        <div class="stat-card">
-            <h3>目前剩餘總預算 (NT$)</h3>
-            <div class="input-box">
-                <input type="number" id="totalMoney" value="1400" step="50" oninput="calc()">
+        <div class="card">
+            <h3>剩餘總預算 (NT$)</h3>
+            <div class="input-row">
+                <input type="number" id="totalMoney" value="1200" step="100" oninput="calc()">
             </div>
         </div>
-        <div class="stat-card" style="border-color: var(--primary);">
-            <h3>單餐可用預算上限</h3>
-            <div class="amount" id="perMealBudget">NT$ 66</div>
-            <div style="font-size: 0.75rem; color: var(--text-sub);" id="dailyMax">每日上限 NT$ 198</div>
+        <div class="card" style="border-color: var(--primary);">
+            <h3>單餐可用預算</h3>
+            <div class="amount" id="perMealBudget">NT$ 57</div>
+            <div style="font-size:0.75rem; color:var(--sub);" id="dailyMax">每日上限 NT$ 171</div>
         </div>
     </div>
 
-    <!-- 每日開銷進度條 -->
-    <div style="margin-bottom: 24px;">
+    <!-- 2. 地點連動 -->
+    <div class="location-bar">
+        <span>📍 地圖搜尋中心點：</span>
+        <input type="text" id="userLoc" value="中山大學" placeholder="輸入地標或學校名稱..." style="flex:1;" oninput="saveLoc()">
+        <span style="font-size:0.75rem; color:var(--sub);">點擊卡片「🔍 地圖尋找」自動開 Google Maps 找周邊美食！</span>
+    </div>
+
+    <!-- 3. 開銷進度條 -->
+    <div class="progress-box">
         <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
             <span>今日預算消耗進度</span>
-            <span id="progressText">0 / 198 元</span>
+            <span id="progressText">0 / 171 元</span>
         </div>
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressBar"></div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
         </div>
     </div>
 
-    <!-- 2. 分類與隨機抽籤 -->
-    <div class="filter-bar">
-        <div style="display:flex; gap:6px;">
-            <button class="tag-btn active" onclick="filterFood('all', this)">全部</button>
+    <!-- 4. 分類與隨機抽籤 -->
+    <div class="filter-row">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="tag-btn active" onclick="filterFood('all', this)">全部餐點</button>
             <button class="tag-btn" onclick="filterFood('convenience', this)">超商 7 折</button>
             <button class="tag-btn" onclick="filterFood('pxmart', this)">全聯省錢</button>
-            <button class="tag-btn" onclick="filterFood('canteen', this)">學校食堂</button>
+            <button class="tag-btn" onclick="filterFood('canteen', this)">學食/便當</button>
+            <button class="tag-btn" onclick="filterFood('luxury', this)">質感輕奢</button>
         </div>
-        <button class="btn" style="background: var(--accent); color: white; font-size: 0.85rem;" onclick="spinRandomFood()">
-            <i class="fa-solid fa-dice"></i> 幫我選一餐！
-        </button>
+        <button class="btn" style="background:var(--accent); color:white;" onclick="spinRandom()">🎲 幫我選一餐</button>
     </div>
 
-    <!-- 3. 美食卡片列表 -->
+    <!-- 5. 菜單網格 -->
     <div class="food-grid" id="foodGrid"></div>
 
-    <!-- 4. 今日記帳 -->
-    <div class="log-section">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-weight:700;"><i class="fa-solid fa-receipt"></i> 今日飲食記帳</span>
-            <span id="todayTotal" style="color:var(--primary); font-weight:700;">今日已花: NT$ 0</span>
+    <!-- 6. 記帳區 -->
+    <div class="log-box">
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-weight:bold;">
+            <span>🧾 今日飲食記帳</span>
+            <span id="todayTotal" style="color:var(--primary);">已花費: NT$ 0</span>
         </div>
 
-        <div class="input-box" style="margin-bottom: 12px;">
-            <input type="text" id="foodName" placeholder="餐點名稱 (例如: 水煮蛋)">
+        <div class="input-row" style="margin-bottom: 12px;">
+            <input type="text" id="foodName" placeholder="餐點名稱 (如: 水煮蛋)">
             <input type="number" id="foodPrice" placeholder="金額" style="width:110px;">
             <button class="btn" onclick="addLog()">記一筆</button>
         </div>
@@ -257,16 +289,30 @@
 
 <script>
     const db = [
-        { name: "全家友善時光 7折便當", price: 45, type: "convenience", desc: "晚上5點後窮鬼神器，品質好", protein: "18g" },
-        { name: "營多印尼炒麵 + 煎蛋", price: 25, type: "pxmart", desc: "極致省錢加蛋補充基礎蛋白質", protein: "8g" },
-        { name: "無糖豆漿 + 7-11 溏心蛋", price: 42, type: "convenience", desc: "超商高蛋白省錢組合", protein: "20g" },
-        { name: "全聯吐司 + 鮪魚罐頭", price: 50, type: "pxmart", desc: "平分兩餐飽足感拉滿", protein: "18g" },
-        { name: "學校食堂自助餐 (菜飯)", price: 65, type: "canteen", desc: "多夾豆腐與青菜，白飯吃飽", protein: "15g" },
-        { name: "超商雞胸肉 + 小地瓜", price: 85, type: "convenience", desc: "預算充裕時乾淨飲食首選", protein: "24g" }
+        { name: "全家 友善時光 7折便當", kw: "全家便利商店 友善時光", price: 45, type: "convenience", desc: "晚上5點後省錢神器" },
+        { name: "7-11 i珍食 7折餐盒", kw: "7-ELEVEN i珍食", price: 49, type: "convenience", desc: "晚上8點後7折優惠" },
+        { name: "營多印尼炒麵 + 煎蛋", kw: "全聯福利中心", price: 25, type: "pxmart", desc: "極致省錢加蛋補充蛋白質" },
+        { name: "無糖豆漿 + 溏心蛋", kw: "便利商店 豆漿 溏心蛋", price: 42, type: "convenience", desc: "超商高蛋白省錢組合" },
+        { name: "全聯吐司 + 鮪魚罐頭", kw: "全聯福利中心 鮪魚罐頭", price: 50, type: "pxmart", desc: "平分兩餐飽足感拉滿" },
+        { name: "學校食堂/學生餐廳", kw: "自助餐 便當", price: 65, type: "canteen", desc: "多夾豆腐與青菜，白飯吃飽" },
+        { name: "平價雞肉飯 / 火雞肉飯", kw: "雞肉飯 便當", price: 60, type: "canteen", desc: "台式小吃高CP值首選" },
+        { name: "超商雞胸肉 + 地瓜", kw: "7-ELEVEN 雞胸肉 地瓜", price: 85, type: "convenience", desc: "乾淨飲食高飽足感" },
+        { name: "健康舒肥雞胸肉餐盒", kw: "健康餐盒 舒肥雞", price: 110, type: "luxury", desc: "低油優質蛋白餐盒" },
+        { name: "精緻日式拉麵", kw: "拉麵", price: 180, type: "luxury", desc: "預算充裕時的享受" },
+        { name: "雙主菜豪華便當", kw: "燒肉便當 自助餐", price: 150, type: "luxury", desc: "肉量爆棚超滿足" }
     ];
 
-    let logs = JSON.parse(localStorage.getItem('bg_logs')) || [];
+    let logs = JSON.parse(localStorage.getItem('bg_logs_v3')) || [];
+    let currentLoc = localStorage.getItem('bg_loc_v3') || '中山大學';
     let currentFilter = 'all';
+
+    document.getElementById('userLoc').value = currentLoc;
+
+    function saveLoc() {
+        currentLoc = document.getElementById('userLoc').value.trim() || '附近';
+        localStorage.setItem('bg_loc_v3', currentLoc);
+        calc();
+    }
 
     function calc() {
         const d = Math.max(1, parseInt(document.getElementById('daysLeft').value) || 1);
@@ -277,36 +323,36 @@
         document.getElementById('perMealBudget').innerText = `NT$ ${perMeal}`;
         document.getElementById('dailyMax').innerText = `每日上限 NT$ ${daily}`;
 
-        renderFoodGrid(perMeal);
+        renderGrid(perMeal);
         updateProgress(daily);
     }
 
-    function renderFoodGrid(perMeal) {
+    function renderGrid(perMeal) {
         const grid = document.getElementById('foodGrid');
         grid.innerHTML = '';
         
-        let list = db.filter(x => x.price <= perMeal + 25);
+        let list = db;
         if (currentFilter !== 'all') {
             list = list.filter(x => x.type === currentFilter);
         }
 
-        if (list.length === 0) {
-            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--text-sub); padding:15px;">此分類下沒有符合預算的餐點</div>`;
-            return;
-        }
-
         list.forEach(item => {
+            const isOver = item.price > perMeal;
+            const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(currentLoc + ' ' + item.kw)}`;
+
             grid.innerHTML += `
-                <div class="food-card">
+                <div class="food-card" style="${isOver ? 'opacity:0.5;' : ''}">
                     <div>
                         <div class="food-title">
                             <span>${item.name}</span>
                             <span class="food-price">NT$ ${item.price}</span>
                         </div>
                         <div class="food-desc">${item.desc}</div>
-                        <span class="badge"><i class="fa-solid fa-dumbbell"></i> 蛋白約 ${item.protein}</span>
                     </div>
-                    <button class="btn" style="font-size:0.8rem; padding:6px 10px; margin-top:10px;" onclick="quickAdd('${item.name}', ${item.price})">+ 吃了這餐</button>
+                    <div class="btn-group">
+                        <button class="btn" style="flex:1; font-size:0.75rem; padding:6px;" onclick="quickAdd('${item.name}', ${item.price})">+ 吃這個</button>
+                        <a href="${mapsUrl}" target="_blank" class="btn-map">🔍 地圖尋找</a>
+                    </div>
                 </div>
             `;
         });
@@ -319,31 +365,37 @@
         calc();
     }
 
-    function spinRandomFood() {
+    function spinRandom() {
         const d = Math.max(1, parseInt(document.getElementById('daysLeft').value) || 1);
         const m = Math.max(0, parseInt(document.getElementById('totalMoney').value) || 0);
         const perMeal = Math.floor((m / d) / 3);
-        const list = db.filter(x => x.price <= perMeal);
+        const list = db.filter(x => x.price <= perMeal + 20);
         
-        if (list.length === 0) return alert('目前預算太緊繃，建議直接全聯買吐司！');
+        if (list.length === 0) return alert('預算較緊，建議全聯買吐司或泡麵！');
+        const item = list[Math.floor(Math.random() * list.length)];
+        const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(currentLoc + ' ' + item.kw)}`;
         
-        const randomItem = list[Math.floor(Math.random() * list.length)];
-        alert(`🎲 月底大神推薦你吃：【${randomItem.name}】(NT$ ${randomItem.price})`);
+        if (confirm(`🎲 隨機抽取推薦：【${item.name}】 (NT$ ${item.price})\n\n要打開 Google Maps 尋找附近的【${item.name}】嗎？`)) {
+            window.open(mapsUrl, '_blank');
+        }
     }
 
     function updateProgress(dailyMax) {
         const sum = logs.reduce((acc, cur) => acc + cur.price, 0);
-        document.getElementById('todayTotal').innerText = `今日已花: NT$ ${sum}`;
-        document.getElementById('progressText').innerText = `${sum} / ${dailyMax} 元`;
-
+        document.getElementById('todayTotal').innerText = `已花費: NT$ ${sum}`;
+        
         const percent = Math.min(100, Math.round((sum / (dailyMax || 1)) * 100));
         const bar = document.getElementById('progressBar');
         bar.style.width = `${percent}%`;
 
-        if (percent >= 100) {
+        if (sum > dailyMax && dailyMax > 0) {
             bar.style.background = 'var(--danger)';
+            document.getElementById('progressText').innerText = `${sum} / ${dailyMax} 元 (⚠️爆預算了！)`;
+            document.getElementById('progressText').style.color = 'var(--danger)';
         } else {
             bar.style.background = 'var(--accent)';
+            document.getElementById('progressText').innerText = `${sum} / ${dailyMax} 元`;
+            document.getElementById('progressText').style.color = 'var(--sub)';
         }
     }
 
@@ -356,12 +408,12 @@
                     <span>${item.name}</span>
                     <div>
                         <span style="color:var(--primary); margin-right:10px;">NT$ ${item.price}</span>
-                        <i class="fa-solid fa-trash" style="color:var(--danger); cursor:pointer;" onclick="deleteLog(${i})"></i>
+                        <span style="color:var(--danger); cursor:pointer;" onclick="deleteLog(${i})">🗑️</span>
                     </div>
                 </div>
             `;
         });
-        localStorage.setItem('bg_logs', JSON.stringify(logs));
+        localStorage.setItem('bg_logs_v3', JSON.stringify(logs));
         calc();
     }
 

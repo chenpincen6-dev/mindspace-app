@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>月底救星：窮鬼美食與預算算盤 BrokeGourmet Maps</title>
+    <title>月底救星：窮鬼美食與預算算盤 BrokeGourmet Maps Ultimate</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -30,7 +30,7 @@
 
         .container {
             width: 100%;
-            max-width: 850px;
+            max-width: 900px;
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -92,7 +92,6 @@
 
         .btn:hover { opacity: 0.9; }
 
-        /* 地點與地圖搜尋設定區 */
         .location-bar {
             background: rgba(56, 189, 248, 0.1);
             border: 1px solid var(--blue);
@@ -107,7 +106,6 @@
 
         .location-bar span { color: var(--blue); font-weight: bold; font-size: 0.9rem; }
 
-        /* 進度條 */
         .progress-box {
             background: #0f172a;
             border: 1px solid var(--border);
@@ -131,10 +129,9 @@
             transition: width 0.3s;
         }
 
-        /* 標籤按鈕 */
         .filter-row {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 16px;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -148,12 +145,11 @@
             padding: 6px 12px;
             border-radius: 16px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .tag-btn.active { background: var(--primary); color: #0f172a; font-weight: bold; }
 
-        /* 菜單網格 */
         .food-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -212,8 +208,8 @@
 
 <div class="container">
     <header>
-        <div class="logo">🍱 BrokeGourmet 月底救星 + 地圖導航</div>
-        <div style="font-size: 0.8rem; color: var(--sub);">窮鬼預算算盤</div>
+        <div class="logo">🍱 BrokeGourmet 月底救星 Maps 終極版</div>
+        <div style="font-size: 0.8rem; color: var(--sub);">海量美食與預算算盤</div>
     </header>
 
     <!-- 1. 預算算盤 -->
@@ -227,13 +223,13 @@
         <div class="card">
             <h3>剩餘總預算 (NT$)</h3>
             <div class="input-row">
-                <input type="number" id="totalMoney" value="1200" step="100" oninput="calc()">
+                <input type="number" id="totalMoney" value="1500" step="100" oninput="calc()">
             </div>
         </div>
         <div class="card" style="border-color: var(--primary);">
             <h3>單餐可用預算</h3>
-            <div class="amount" id="perMealBudget">NT$ 57</div>
-            <div style="font-size:0.75rem; color:var(--sub);" id="dailyMax">每日上限 NT$ 171</div>
+            <div class="amount" id="perMealBudget">NT$ 71</div>
+            <div style="font-size:0.75rem; color:var(--sub);" id="dailyMax">每日上限 NT$ 214</div>
         </div>
     </div>
 
@@ -241,30 +237,33 @@
     <div class="location-bar">
         <span>📍 地圖搜尋中心點：</span>
         <input type="text" id="userLoc" value="中山大學" placeholder="輸入地標或學校名稱..." style="flex:1;" oninput="saveLoc()">
-        <span style="font-size:0.75rem; color:var(--sub);">點擊卡片「🔍 地圖尋找」自動開 Google Maps 找周邊美食！</span>
+        <span style="font-size:0.75rem; color:var(--sub);">點擊卡片「🔍 地圖尋找」自動開 Google Maps 導航！</span>
     </div>
 
     <!-- 3. 開銷進度條 -->
     <div class="progress-box">
         <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
             <span>今日預算消耗進度</span>
-            <span id="progressText">0 / 171 元</span>
+            <span id="progressText">0 / 214 元</span>
         </div>
         <div class="progress-bar">
             <div class="progress-fill" id="progressBar"></div>
         </div>
     </div>
 
-    <!-- 4. 分類與隨機抽籤 -->
+    <!-- 4. 多分類篩選與隨機抽籤 -->
     <div class="filter-row">
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button class="tag-btn active" onclick="filterFood('all', this)">全部餐點</button>
-            <button class="tag-btn" onclick="filterFood('convenience', this)">超商 7 折</button>
-            <button class="tag-btn" onclick="filterFood('pxmart', this)">全聯省錢</button>
-            <button class="tag-btn" onclick="filterFood('canteen', this)">學食/便當</button>
-            <button class="tag-btn" onclick="filterFood('luxury', this)">質感輕奢</button>
+            <button class="tag-btn active" onclick="filterFood('all', this)">全部品項</button>
+            <button class="tag-btn" onclick="filterFood('street', this)">小吃/滷味/鹽水雞</button>
+            <button class="tag-btn" onclick="filterFood('canteen', this)">便當/台味/自助餐</button>
+            <button class="tag-btn" onclick="filterFood('jp_kr', this)">日韓/壽司/拉麵/燒肉</button>
+            <button class="tag-btn" onclick="filterFood('western', this)">義式/美式/漢堡</button>
+            <button class="tag-btn" onclick="filterFood('hotpot', this)">小火鍋/湯品</button>
+            <button class="tag-btn" onclick="filterFood('cheap', this)">超商7折/全聯省錢</button>
+            <button class="tag-btn" onclick="filterFood('dessert', this)">冰品/甜點/飲料</button>
         </div>
-        <button class="btn" style="background:var(--accent); color:white;" onclick="spinRandom()">🎲 幫我選一餐</button>
+        <button class="btn" style="background:var(--accent); color:white; margin-top:4px;" onclick="spinRandom()">🎲 幫我選一餐</button>
     </div>
 
     <!-- 5. 菜單網格 -->
@@ -278,7 +277,7 @@
         </div>
 
         <div class="input-row" style="margin-bottom: 12px;">
-            <input type="text" id="foodName" placeholder="餐點名稱 (如: 水煮蛋)">
+            <input type="text" id="foodName" placeholder="餐點名稱 (如: 鹽水雞套餐)">
             <input type="number" id="foodPrice" placeholder="金額" style="width:110px;">
             <button class="btn" onclick="addLog()">記一筆</button>
         </div>
@@ -288,29 +287,63 @@
 </div>
 
 <script>
+    // 豐富的多元飲食資料庫
     const db = [
-        { name: "全家 友善時光 7折便當", kw: "全家便利商店 友善時光", price: 45, type: "convenience", desc: "晚上5點後省錢神器" },
-        { name: "7-11 i珍食 7折餐盒", kw: "7-ELEVEN i珍食", price: 49, type: "convenience", desc: "晚上8點後7折優惠" },
-        { name: "營多印尼炒麵 + 煎蛋", kw: "全聯福利中心", price: 25, type: "pxmart", desc: "極致省錢加蛋補充蛋白質" },
-        { name: "無糖豆漿 + 溏心蛋", kw: "便利商店 豆漿 溏心蛋", price: 42, type: "convenience", desc: "超商高蛋白省錢組合" },
-        { name: "全聯吐司 + 鮪魚罐頭", kw: "全聯福利中心 鮪魚罐頭", price: 50, type: "pxmart", desc: "平分兩餐飽足感拉滿" },
-        { name: "學校食堂/學生餐廳", kw: "自助餐 便當", price: 65, type: "canteen", desc: "多夾豆腐與青菜，白飯吃飽" },
-        { name: "平價雞肉飯 / 火雞肉飯", kw: "雞肉飯 便當", price: 60, type: "canteen", desc: "台式小吃高CP值首選" },
-        { name: "超商雞胸肉 + 地瓜", kw: "7-ELEVEN 雞胸肉 地瓜", price: 85, type: "convenience", desc: "乾淨飲食高飽足感" },
-        { name: "健康舒肥雞胸肉餐盒", kw: "健康餐盒 舒肥雞", price: 110, type: "luxury", desc: "低油優質蛋白餐盒" },
-        { name: "精緻日式拉麵", kw: "拉麵", price: 180, type: "luxury", desc: "預算充裕時的享受" },
-        { name: "雙主菜豪華便當", kw: "燒肉便當 自助餐", price: 150, type: "luxury", desc: "肉量爆棚超滿足" }
+        // 1. 小吃/滷味/鹽水雞 (street)
+        { name: "加熱滷味 (科學麵+凍豆腐+高麗菜)", kw: "加熱滷味", price: 65, type: "street", desc: "宵夜與正餐皆宜，自由夾選" },
+        { name: "鮮嫩鹽水雞 (雞胸+三樣蔬菜)", kw: "鹽水雞", price: 80, type: "street", desc: "清爽低油脂，補充蔬菜與蛋白質" },
+        { name: "香雞排 + 甜不辣組合", kw: "雞排 鹹酥雞", price: 95, type: "street", desc: "罪惡感滿點的快樂解壓首選" },
+        { name: "台式乾麵 + 貢丸湯", kw: "乾麵 餛飩湯", price: 65, type: "street", desc: "古早味麵攤高CP值配方" },
+        { name: "大腸包小腸 / 蔥油餅加蛋", kw: "蔥油餅 大腸包小腸", price: 50, type: "street", desc: "快速解決一餐的台式街頭美食" },
+
+        // 2. 便當/台味/自助餐 (canteen)
+        { name: "學校食堂自助餐 (菜飯便當)", kw: "自助餐 學生餐廳", price: 65, type: "canteen", desc: "夾滿蔬菜豆腐，白飯吃到飽" },
+        { name: "香煎排骨便當 / 雞腿便當", kw: "排骨便當 雞腿飯", price: 95, type: "canteen", desc: "經典台式便當，份量超滿足" },
+        { name: "平價雞肉飯 / 火雞肉飯", kw: "雞肉飯 便當", price: 60, type: "canteen", desc: "淋上雞油鹹香順口" },
+        { name: "港式燒臘雙拼飯 (叉燒+燒鴨)", kw: "燒臘便當", price: 110, type: "canteen", desc: "肉香四溢，淋上蔥油超開胃" },
+        { name: "健康舒肥雞胸肉餐盒", kw: "健康餐盒 舒肥雞", price: 115, type: "canteen", desc: "健身與控卡必吃的低油清爽便當" },
+
+        // 3. 日韓/壽司/拉麵/燒肉 (jp_kr)
+        { name: "爭鮮/平價迴轉壽司 (約4-5盤)", kw: "迴轉壽司 壽司", price: 150, type: "jp_kr", desc: "想吃生魚片與握壽司的小資選擇" },
+        { name: "濃郁日式拉麵", kw: "日式拉麵", price: 180, type: "jp_kr", desc: "濃厚豚骨或醬油湯頭配叉燒" },
+        { name: "韓式泡菜豆腐鍋 / 部隊鍋", kw: "韓式豆腐鍋 韓式料理", price: 160, type: "jp_kr", desc: "酸辣開胃，附贈小菜與白飯" },
+        { name: "韓式炸雞 + 年糕組合", kw: "韓式炸雞", price: 190, type: "jp_kr", desc: "酥脆甜辣，追劇與聚餐首選" },
+        { name: "個人單人燒肉定食", price: 280, kw: "燒肉定食 個人燒肉", type: "jp_kr", desc: "預算充裕時的大口吃肉享受" },
+        { name: "日式豬排咖哩飯", kw: "咖哩飯 日式豬排", price: 130, type: "jp_kr", desc: "外酥內嫩厚切豬排配濃郁咖哩" },
+
+        // 4. 義式/美式/漢堡 (western)
+        { name: "平價義大利麵 / 奶油培根麵", kw: "義大利麵", price: 120, type: "western", desc: "濃郁白醬或紅醬，可加麵吃飽" },
+        { name: "焗烤海鮮飯 / 燉飯", kw: "義式燉飯 焗烤", price: 150, type: "western", desc: "起司香濃牽絲的滿足口感" },
+        { name: "美式雙層起司牛肉堡套餐", kw: "美式漢堡 漢堡", price: 180, type: "western", desc: "現煎多汁牛肉排配薯條飲料" },
+        { name: "披薩單人套餐 (個人小披薩)", kw: "披薩", price: 140, type: "western", desc: "獨享熱騰騰薄脆披薩" },
+
+        // 5. 小火鍋/湯品 (hotpot)
+        { name: "百元平價小火鍋 (牛奶/臭臭鍋)", kw: "小火鍋 臭臭鍋", price: 160, type: "hotpot", desc: "白飯、飲料、冰淇淋無限享用" },
+        { name: "麻辣燙自選組合 (含肉片與麵)", kw: "麻辣燙", price: 120, type: "hotpot", desc: "香麻入味，冷天吃一口最暖胃" },
+        { name: "煲湯 / 薑母鴨 / 羊肉爐個人鍋", kw: "個人鍋 藥膳湯", price: 180, type: "hotpot", desc: "進補暖身的高營養湯品" },
+
+        // 6. 超商7折/全聯省錢 (cheap)
+        { name: "全家 友善時光 7折便當", kw: "全家便利商店 友善時光", price: 45, type: "cheap", desc: "晚上5點後窮鬼神器" },
+        { name: "7-11 i珍食 7折飯糰/餐盒", kw: "7-ELEVEN i珍食", price: 49, type: "cheap", desc: "晚上8點後7折優惠" },
+        { name: "營多印尼炒麵 + 煎蛋", kw: "全聯福利中心", price: 25, type: "cheap", desc: "極致省錢加蛋補充蛋白質" },
+        { name: "無糖豆漿 + 溏心蛋", kw: "便利商店 豆漿 溏心蛋", price: 42, type: "cheap", desc: "超商高蛋白省錢組合" },
+        { name: "全聯吐司 + 鮪魚罐頭", kw: "全聯福利中心 鮪魚罐頭", price: 50, type: "cheap", desc: "平分兩餐飽足感拉滿" },
+
+        // 7. 冰品/甜點/飲料 (dessert)
+        { name: "古早味剉冰 (任選4種配料)", kw: "剉冰 冰店", price: 60, type: "dessert", desc: "芋圓、紅豆、仙草消暑神器" },
+        { name: "雪花冰 / 芒果牛奶冰", kw: "雪花冰 冰品", price: 110, type: "dessert", desc: "綿密口感與濃郁奶香" },
+        { name: "手搖飲 + 雞蛋糕/紅豆餅宵夜", kw: "手搖飲料 雞蛋糕", price: 75, type: "dessert", desc: "下午茶或小點心的快樂組合" }
     ];
 
-    let logs = JSON.parse(localStorage.getItem('bg_logs_v3')) || [];
-    let currentLoc = localStorage.getItem('bg_loc_v3') || '中山大學';
+    let logs = JSON.parse(localStorage.getItem('bg_logs_v4')) || [];
+    let currentLoc = localStorage.getItem('bg_loc_v4') || '中山大學';
     let currentFilter = 'all';
 
     document.getElementById('userLoc').value = currentLoc;
 
     function saveLoc() {
         currentLoc = document.getElementById('userLoc').value.trim() || '附近';
-        localStorage.setItem('bg_loc_v3', currentLoc);
+        localStorage.setItem('bg_loc_v4', currentLoc);
         calc();
     }
 
@@ -341,7 +374,7 @@
             const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(currentLoc + ' ' + item.kw)}`;
 
             grid.innerHTML += `
-                <div class="food-card" style="${isOver ? 'opacity:0.5;' : ''}">
+                <div class="food-card" style="${isOver ? 'opacity:0.55;' : ''}">
                     <div>
                         <div class="food-title">
                             <span>${item.name}</span>
@@ -369,13 +402,13 @@
         const d = Math.max(1, parseInt(document.getElementById('daysLeft').value) || 1);
         const m = Math.max(0, parseInt(document.getElementById('totalMoney').value) || 0);
         const perMeal = Math.floor((m / d) / 3);
-        const list = db.filter(x => x.price <= perMeal + 20);
+        const list = db.filter(x => x.price <= perMeal + 25);
         
         if (list.length === 0) return alert('預算較緊，建議全聯買吐司或泡麵！');
         const item = list[Math.floor(Math.random() * list.length)];
         const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(currentLoc + ' ' + item.kw)}`;
         
-        if (confirm(`🎲 隨機抽取推薦：【${item.name}】 (NT$ ${item.price})\n\n要打開 Google Maps 尋找附近的【${item.name}】嗎？`)) {
+        if (confirm(`🎲 隨機抽取推薦：【${item.name}】 (NT$ ${item.price})\n\n要開啟 Google Maps 搜尋【${currentLoc}】附近的【${item.name}】嗎？`)) {
             window.open(mapsUrl, '_blank');
         }
     }
@@ -413,7 +446,7 @@
                 </div>
             `;
         });
-        localStorage.setItem('bg_logs_v3', JSON.stringify(logs));
+        localStorage.setItem('bg_logs_v4', JSON.stringify(logs));
         calc();
     }
 

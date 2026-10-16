@@ -10,11 +10,11 @@
     <style>
         :root {
             --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.75);
+            --card-bg: rgba(30, 41, 59, 0.85);
             --card-border: rgba(255, 255, 255, 0.12);
-            --primary: #f59e0b; /* 溫暖的食物金黃色 */
+            --primary: #f59e0b;
             --primary-hover: #d97706;
-            --accent: #10b981; /* 綠色象徵省錢/預算 */
+            --accent: #10b981;
             --danger: #ef4444;
             --text-main: #f8fafc;
             --text-sub: #94a3b8;
@@ -66,7 +66,6 @@
             gap: 10px;
         }
 
-        /* 預算計算法看板 */
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -98,9 +97,10 @@
             display: flex;
             gap: 10px;
             margin-top: 10px;
+            align-items: center;
         }
 
-        input[type="number"], input[type="text"], select {
+        input[type="number"], input[type="text"] {
             width: 100%;
             padding: 10px 14px;
             border-radius: 10px;
@@ -127,7 +127,6 @@
             transform: translateY(-2px);
         }
 
-        /* 美食推薦區 */
         .food-section {
             margin-top: 28px;
         }
@@ -202,7 +201,6 @@
             color: #34d399;
         }
 
-        /* 記帳紀錄表 */
         .log-section {
             margin-top: 32px;
             background: rgba(15, 23, 42, 0.4);
@@ -237,22 +235,84 @@
         <div style="font-size: 0.85rem; color: var(--text-sub);">窮鬼美食與預算算盤</div>
     </header>
 
-    <!-- 1. 預算算盤計算器 -->
     <div class="dashboard">
         <div class="stat-card">
             <h3>距離發薪/發生活費</h3>
             <div class="input-inline">
-                <number><input type="number" id="daysLeft" value="7" min="1" onchange="calculateBudget()"></number>
-                <span style="align-self: center; color: var(--text-sub);">天</span>
+                <input type="number" id="daysLeft" value="7" min="1" oninput="calculateBudget()">
+                <span style="color: var(--text-sub);">天</span>
             </div>
         </div>
         <div class="stat-card">
             <h3>目前剩餘總預算 (NT$)</h3>
             <div class="input-inline">
-                <input type="number" id="totalMoney" value="1200" step="50" onchange="calculateBudget()">
+                <input type="number" id="totalMoney" value="1200" step="50" oninput="calculateBudget()">
             </div>
         </div>
         <div class="stat-card" style="border-color: var(--primary);">
             <h3>今日單餐可用預算</h3>
             <div class="amount" id="perMealBudget">NT$ 57</div>
-            <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px;" id="dailyBudgetHint
+            <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px;" id="dailyBudgetHint">每日總預算約 NT$ 171 (以一天 3 餐計)</div>
+        </div>
+    </div>
+
+    <div class="food-section">
+        <div class="section-title">
+            <i class="fa-solid fa-burger" style="color: var(--primary);"></i>
+            根據你的目前單餐預算推薦美食組合
+        </div>
+
+        <div class="food-grid" id="foodGrid"></div>
+    </div>
+
+    <div class="log-section">
+        <div class="section-title" style="justify-content: space-between;">
+            <span><i class="fa-solid fa-receipt" style="color: var(--accent);"></i> 今日已花費記帳</span>
+            <span style="font-size: 0.9rem; color: var(--primary);" id="todayTotalCost">今日已花: NT$ 0</span>
+        </div>
+
+        <div class="input-inline" style="margin-bottom: 16px;">
+            <input type="text" id="customFoodName" placeholder="餐點名稱 (如: 雞肉飯 + 蛋)">
+            <input type="number" id="customFoodPrice" placeholder="金額" style="width: 120px;">
+            <button class="btn" onclick="addCustomLog()"><i class="fa-solid fa-plus"></i> 記一筆</button>
+        </div>
+
+        <div id="logList"></div>
+    </div>
+</div>
+
+<script>
+    const foodDatabase = [
+        { name: "全家友善時光 7 折飯糰/便當", price: 45, protein: "12g~20g", desc: "晚上 5 點後窮鬼神器，品質好又高 CP 值" },
+        { name: "營多印尼炒麵 + 煎蛋", price: 25, protein: "8g", desc: "極致省錢選擇，加顆蛋補充基礎蛋白質" },
+        { name: "無糖豆漿 + 7-11 溏心蛋", price: 42, protein: "20g", desc: "高蛋白低預算首選，健身控必備超商組合" },
+        { name: "全聯吐司 + 鮪魚罐頭 (平分2餐)", price: 50, protein: "18g", desc: "買一罐鮪魚配半包吐司，飽足感拉滿" },
+        { name: "學校食堂自助菜飯便當", price: 65, protein: "15g", desc: "多夾青菜與豆腐，白飯加滿最劃算" },
+        { name: "超商雞胸肉 + 小地瓜", price: 85, protein: "24g", desc: "乾淨飲食且高飽足感，適合預算稍微充足時" },
+        { name: "連鎖台式乾麵 + 貢丸湯", price: 75, protein: "12g", desc: "傳統小吃店熱騰騰好選擇" },
+        { name: "自選雙主菜豪華便當", price: 110, protein: "35g", desc: "今天發薪或預算充足，好好犒賞自己！" }
+    ];
+
+    let todayLogs = JSON.parse(localStorage.getItem('bg_today_logs')) || [];
+
+    function calculateBudget() {
+        const days = Math.max(1, parseInt(document.getElementById('daysLeft').value) || 1);
+        const money = Math.max(0, parseInt(document.getElementById('totalMoney').value) || 0);
+        
+        const dailyBudget = Math.floor(money / days);
+        const perMeal = Math.floor(dailyBudget / 3);
+
+        document.getElementById('perMealBudget').innerText = `NT$ ${perMeal}`;
+        document.getElementById('dailyBudgetHint').innerText = `每日總預算約 NT$ ${dailyBudget} (一天以 3 餐計)`;
+
+        renderFoodRecommendations(perMeal);
+    }
+
+    function renderFoodRecommendations(perMealBudget) {
+        const grid = document.getElementById('foodGrid');
+        grid.innerHTML = '';
+
+        const filtered = foodDatabase.filter(item => item.price <= perMealBudget + 25);
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--
